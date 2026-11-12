@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #0b0f19;
+}
+
+body {
+  margin: 0;
+  color: #e2e8f0;
+  font-family: "Outfit", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(234, 179, 8, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(147, 51, 234, 0.08), transparent 60%),
+    linear-gradient(180deg, #080b14 0%, #0b0f19 100%);
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(234, 179, 8, 0.35);
+  color: #fef3c7;
+}
+
+.font-display { font-family: "Playfair Display", Georgia, serif; }
+.font-prose { font-family: "Cormorant Garamond", "Playfair Display", serif; }
+.font-sans-ui { font-family: "Outfit", system-ui, sans-serif; }
+
+/* ---------- parchment panel ---------- */
+.parchment {
+  background:
+    radial-gradient(ellipse at top, rgba(234, 179, 8, 0.07), transparent 60%),
+    linear-gradient(180deg, #131a2b 0%, #0f1424 100%);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.gold-border { border: 1px solid rgba(234, 179, 8, 0.35); }
+.gold-border:hover { border-color: rgba(234, 179, 8, 0.75); }
+
+/* subtle paper grain */
+.paper-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.015) 0 1px, transparent 1px 3px),
+    repeating-radial-gradient(circle at 75% 60%, rgba(0, 0, 0, 0.03) 0 1px, transparent 1px 2px);
+  mix-blend-mode: overlay;
+  opacity: 0.8;
+}
+
+/* ---------- aurora shimmer for hero ---------- */
+.aurora {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(40% 30% at 20% 30%, rgba(234, 179, 8, 0.18), transparent 60%),
+    radial-gradient(35% 25% at 80% 20%, rgba(147, 51, 234, 0.22), transparent 60%),
+    radial-gradient(30% 30% at 60% 80%, rgba(2, 132, 199, 0.18), transparent 60%);
+  filter: blur(40px);
+  animation: aurora-drift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes aurora-drift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  100% { transform: translate3d(-4%, 3%, 0) rotate(8deg); }
+}
+
+/* floating star particles */
+.star {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 9999px;
+  background: #fef3c7;
+  opacity: 0.6;
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50% { opacity: 0.9; transform: scale(1.2); }
+}
+
+/* ---------- animations ---------- */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.6s ease-out both; }
+
+@keyframes scene-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); filter: blur(6px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+.animate-scene-in { animation: scene-in 0.8s ease-out both; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin-slow 12s linear infinite; }
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.45); }
+  70% { box-shadow: 0 0 0 16px rgba(234, 179, 8, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+}
+.pulse-ring { animation: pulse-ring 2.2s infinite; }
+
+/* magical book cover hover */
+.book-card { transition: transform 0.5s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s; }
+.book-card:hover {
+  transform: translateY(-6px) rotate(-0.3deg);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(234, 179, 8, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---------- shadcn CSS variables (dark baseline) ---------- */
+@layer base {
+  :root {
+    --background: 222 44% 7%;
+    --foreground: 48 96% 89%;
+    --card: 221 32% 12%;
+    --card-foreground: 48 96% 89%;
+    --popover: 221 32% 12%;
+    --popover-foreground: 48 96% 89%;
+    --primary: 45 93% 47%;
+    --primary-foreground: 222 44% 7%;
+    --secondary: 221 32% 16%;
+    --secondary-foreground: 48 96% 89%;
+    --muted: 221 32% 14%;
+    --muted-foreground: 215 16% 65%;
+    --accent: 45 93% 47%;
+    --accent-foreground: 222 44% 7%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 60% 30% / 0.35;
+    --input: 221 32% 16%;
+    --ring: 45 93% 47%;
+    --radius: 0.6rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
