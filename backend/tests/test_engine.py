@@ -12,7 +12,7 @@ from scipy.io import wavfile
 from engine import ambient_gen, consistency, image_gen
 from engine.config import (GENRE_DEFAULT_SOUND, GENRE_STYLE, GENRES, NARRATIVE_ARC, PROFILES, SOUND_TAGS,
                            build_config)
-from engine.text_gen import _scene_prompt, clean_text, parse_labels, plan_story, sanitize_scene, write_scene
+from engine.text_gen import _is_degraded, _scene_prompt, clean_text, parse_labels, plan_story, sanitize_scene, write_scene
 
 PLAN = {"protagonist_en": "a girl with a red braid and green cloak", "setting_en": "a floating city"}
 
@@ -52,6 +52,7 @@ class SceneGeneration(unittest.TestCase):
         self.assertIn(f"PREMISA OBLIGATORIA DEL USUARIO (respétala en toda la historia): «{idea}»", prompt)
         self.assertIn("no reemplaza la premisa", prompt)
         self.assertIn("No cambies al protagonista, el objetivo ni la situación central", prompt)
+        self.assertIn("usa mayúsculas y minúsculas normales", prompt)
 
     def test_story_plan_instructs_model_to_anchor_character_in_idea(self):
         with patch("engine.text_gen.chat", return_value=(
@@ -71,6 +72,24 @@ class SceneGeneration(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "escena 1.*20 palabras.*35"):
                 write_scene({}, "idea", "fantasia", {}, [], 0)
         self.assertEqual(attempt.call_count, 2)
+
+    def test_degraded_scene_retries_and_prefers_normal_capitalization(self):
+        degraded = {"text": "ANA BUSCABA LOS SONIDOS DEL BOSQUE Y CAMINABA ENTRE LOS ÁRBOLES. " * 8}
+        coherent = {"text": "Ana buscaba los sonidos del bosque y caminaba entre los árboles. " * 8}
+        self.assertTrue(_is_degraded(degraded["text"]))
+        self.assertFalse(_is_degraded(coherent["text"]))
+
+        with patch("engine.text_gen._attempt", side_effect=[(degraded, 5), (coherent, 5)]) as attempt:
+            scene, _ = write_scene({}, "idea", "fantasia", {}, [], 2)
+
+        self.assertEqual(scene["text"], coherent["text"])
+        self.assertEqual(attempt.call_count, 2)
+
+    def test_degraded_scene_fails_if_retry_is_also_all_caps(self):
+        degraded = {"text": "ANA BUSCABA LOS SONIDOS DEL BOSQUE Y CAMINABA ENTRE LOS ÁRBOLES. " * 8}
+        with patch("engine.text_gen._attempt", side_effect=[(degraded, 5), (degraded, 5)]):
+            with self.assertRaisesRegex(RuntimeError, "escena 3.*mayúsculas sostenidas"):
+                write_scene({}, "idea", "fantasia", {}, [], 2)
 
 
 class Config(unittest.TestCase):
@@ -103,11 +122,36 @@ class Prompts(unittest.TestCase):
         self.assertTrue(p.startswith(GENRE_STYLE["fantasia"]))
         self.assertIn(PLAN["protagonist_en"], p)
         self.assertIn(PLAN["setting_en"], p)
+        self.assertLess(p.index(PLAN["protagonist_en"]), p.index("a girl on a bridge"))
 
     def test_consistency_off_excludes_bible(self):
         p = image_gen.build_prompt("terror", PLAN, "a lighthouse", False)
         self.assertNotIn(PLAN["protagonist_en"], p)
         self.assertIn("a lighthouse", p)
+
+    def test_fit_prompt_keeps_priority_prefix_within_clip_limit(self):
+        class WordTokenizer:
+            model_max_length = 8
+
+            def tokenize(self, text):
+                return text.split()
+
+            def convert_tokens_to_ids(self, tokens):
+                return tokens
+
+            def encode(self, text, add_special_tokens=False):
+                return text.split()
+
+            def decode(self, tokens, skip_special_tokens=True):
+                return " ".join(tokens)
+
+        prompt = image_gen.fit_prompt(
+            "fantasy main character red braid green cloak a girl crossing the river at night",
+            [WordTokenizer()],
+        )
+        self.assertLessEqual(len(prompt.split()), 6)
+        self.assertIn("main", prompt)
+        self.assertIn("character", prompt)
 
 
 class Ambient(unittest.TestCase):

@@ -39,7 +39,7 @@ function PublicOnly({ children }) {
 
 export default function App() {
   return (
-    <div className="App relative">
+    <div className="App relative pt-16">
       <StarsBackground />
       <BrowserRouter>
         <Header />

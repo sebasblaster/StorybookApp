@@ -1,0 +1,147 @@
+{
+  "idea": "una niña que colecciona sonidos del bosque",
+  "genre": "fantasia",
+  "config": {
+    "profile": "ligero",
+    "text_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "text_quant": null,
+    "image_model": "stabilityai/sd-turbo",
+    "tts_model": "facebook/mms-tts-spa",
+    "image_size": 512,
+    "image_steps": 2,
+    "temperature": 0.8,
+    "seed": 42,
+    "ip_adapter": false,
+    "consistency": true,
+    "device": "cpu"
+  },
+  "plan": {
+    "title": "El Rincón de los Sonidos",
+    "protagonist": "Ana, una pequeña exploradora de oídos.",
+    "protagonist_en": "Ani, a young explorer of ears.",
+    "setting_en": "Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río.",
+    "raw": "**TITULO:** \"El Rincón de los Sonidos\"\n\n**PROTAGONISTA:** Ana, una pequeña exploradora de oídos.\n\n**PROTAGONISTA_EN:** Ani, a young explorer of ears.\n\n**ESCENARIO_EN:** Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río."
+  },
+  "scenes": [
+    {
+      "index": 1,
+      "text": "Ana arrancó el velo de hojas, sintiendo el suave polvo bajo las manos. En el centro de su pequeño patio, rodeado de árboles altos y densos, había una caja mágica dorada, tapada con papel dorado. Su corazón latió con fuerza al pensar en lo que podría encontrar adentro: una canción misteriosa o un cuento guardado. Había venido desde la ciudad con el sueño de recolectar todos los sonidos del bosque para formar una melodía perfecta.",
+      "image_en": "Un día soleado, la luz del sol colorea la hierba veraniega de color verde intenso. Las ramas de los árboles eran tan altas que casi llegaban hasta el cielo, dejando apenas visibles las pequeñas florecillas en sus extremi",
+      "raw": "Texto:\nAna arrancó el velo de hojas, sintiendo el suave polvo bajo las manos. En el centro de su pequeño patio, rodeado de árboles altos y densos, había una caja mágica dorada, tapada con papel dorado. Su corazón latió con fuerza al pensar en lo que podría encontrar adentro: una canción misteriosa o un cuento guardado. Había venido desde la ciudad con el sueño de recolectar todos los sonidos del bosque para formar una melodía perfecta.\n\nImagen_en: Un día soleado, la luz del sol colorea la hierba veraniega de color verde intenso. Las ramas de los árboles eran tan altas que casi llegaban hasta el cielo, dejando apenas visibles las pequeñas florecillas en sus extremidades.\n\nSonido: BOSQUE",
+      "sound_tag": "bosque",
+      "sound_name": "Bosque con pájaros",
+      "image": "/api/media/exp/scene_1_1042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, main character : ani, a young explorer of ears., un día soleado, la luz del sol colorea la hierba veraniega de color verde intenso. las ramas de los árboles eran tan altas que casi llegaban hasta el cielo,",
+      "image_seed": 1042,
+      "audio": "/api/media/exp/voice_1.wav",
+      "audio_duration": 37.42,
+      "ambient": "/api/media/exp/ambient_1.wav"
+    },
+    {
+      "index": 2,
+      "text": "ESCENA 2 / La niebla envolvía el sendero, los pies se aferraban al camino más estrecho para no perderse entre los árboles que oscurecían el cielo. La niña caminaba con una determinación firme, cada ruido suave resonante como una melodía misteriosa. Cada sonido era un tesoro en su poder, pero también una presencia invisible amenazando a su tranquila rutina.",
+      "image_en": "Un paisaje nocturno del bosque envuelto en sombras, con una luna oscura pero brillante entre las ramas altas.",
+      "raw": "ESCENA 2 / TEXTO:\n\nAna atravesó el paraje tranquilo de su casa, suavemente cubierto por un débil brillo lunar sobre el follaje. La luna, resplandeciente, parecía acercarse hacia el cielo, brillando con su luz amarilla. Ella tocaba una melodía de susurros en la parte trasera del patio, donde un viejo tambor seguía latiéndole como un eco de recuerdos pasados.\n\nIMAGEN_EN:  \nUn paisaje nocturno del bosque envuelto en sombras, con una luna oscura pero brillante entre las ramas altas.\n\nSONIDO: Luna\n\nANITA ESTA EN EL RINCÓN DE LOS SONIDOS. LA PREMISA ES UNA NIÑA QUE COLECCIONA SONIDOS DEL BOSQUE. ANA ES SU PROTAGONISTA Y SE VUELVIO A HACER SU VIAJE PARA RECOLECTAR UN SOUNDYSON. EL PASO DE LA NOCHE COMO ILUMINACIÓN DE LA PREMIURA. ANA TIRA CON SUS SUDORAS AL PISO, LAS MANOS MÁS AGILES ENTRA EN EL JARDÍN Y ENSEÑA A LA LUNA UN NUEVO SONGO. LA LLUVIA ARIEBLA SU CUENTO CON SU LUZ AMARRILDEADA Y LA NOCHE TIENE SU MISMO ECHO EN EL PAISAJE, DICIENDO \"ESTÁS BIEN\". ANA CONTINUARA SU VIAJE PARA COLECCIÓN DE SOUNDS, CON LA PRE",
+      "sound_tag": "magia",
+      "sound_name": "Destellos mágicos",
+      "image": "/api/media/exp/scene_2_2042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, main character : ani, a young explorer of ears., un paisaje nocturno del bosque envuelto en sombras, con una luna oscura pero brillante entre las ramas altas., un bosque húmedo y profundo, lleno de hojas caídas",
+      "image_seed": 2042,
+      "audio": "/api/media/exp/voice_2.wav",
+      "audio_duration": 29.34,
+      "ambient": "/api/media/exp/ambient_2.wav"
+    },
+    {
+      "index": 3,
+      "text": "ESCENA 3: ANA SEÑALÓ A LA MAGDALENA QUE EL VIENTO ESTÁSQUIRANDO SU ENTRADA AL BOSQUE EL ANA SEÑALÓ A LA MAGDALENA QUE EL VIENTO ÉSTE QUIRANDO SU ENTRADA AL BOSQUE EL PUEDE CREAR UNA CASA DE SILENCE OTRA RISA EN SU ABECEDARIO DEL",
+      "image_en": "Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río.",
+      "raw": "ESCENA 3: ANA SEÑALÓ A LA MAGDALENA QUE EL VIENTO ESTÁSQUIRANDO SU ENTRADA AL BOSQUE\n\nEL SONIDO DE LA LLUVIA SUELTA SUS LÍQUIDOS Y FLUYENTES COMO UNA PANTALLA DE SOMBRAS MISTERIOSAS EN EL ARBORETUM. \n\nLA MAGDALENA HACÍA CLARA MANERA DE ENJUCARSE CON EL VIENTO AL GUSTO POR SU ENTRETIENDA. LA LLUVIA ESPECTRA SU PIEL CUERPO COMO SI FICHIASEN LAS TECNOLOGÍAS DE LOS SONIDOS. EL PASO DE LA NIEBRESSEANZA SE MECAZABA COMO UNA PLATAFORMA PARA EL VIAJE, MONTANDO UNA DÉCIMA VERSIÓN DE LA CIUDAD EN EL BOSQUE. LA MAGDALENA SE COCHAS E INTEGRADO COMO UNA PIEZA ÚNICA EN EL ESPACIO. LA LLUVIA ERA LO MÁS FIJO Y CONTINUADO EN EL PLANETA, SIN IMPORTAR LO QUE OCURRIERE EN OTROS ESPACIOS.\n\nEL PAISAJE DEL BOSQUE TIENE UN SILENTE MÉTICO, CON EL SUAVE SÓNICO DE LAS RODEAS HOJAS AFRONDOYENDO COMO UN GRITO DE ALMA. LA MAGDALENA BUSCA EL PERIODO EN EL BOSQUE CON SU RECUERDO DEL ARTE DE LA CUAZION. LA LLUV",
+      "sound_tag": "magia",
+      "sound_name": "Destellos mágicos",
+      "image": "/api/media/exp/scene_3_3042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, main character : ani, a young explorer of ears., un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río., un bosque húmedo y",
+      "image_seed": 3042,
+      "audio": "/api/media/exp/voice_3.wav",
+      "audio_duration": 19.57,
+      "ambient": "/api/media/exp/ambient_3.wav"
+    },
+    {
+      "index": 4,
+      "text": "ESCENA 4: Ana llegó hasta el borde de la cueva oscura. Sus dedos palparon el frío cristaline vidrio mientras el viento le chillaba por el oído. Las garras de un animal nocturno resollaron detrás de una puerta trasera, creando un eco incierto. Una luz tenue emergió de la oscuridad, haciendo desvanecer las sombras y revelando un mundo interior lleno de misterios.",
+      "image_en": "Cueva oscura con una luna alta brillando por la abertura de la puerta.",
+      "raw": "ESCENA 4:\n\nAna llegó hasta el borde de la cueva oscura. Sus dedos palparon el frío cristaline vidrio mientras el viento le chillaba por el oído. Las garras de un animal nocturno resollaron detrás de una puerta trasera, creando un eco incierto. Una luz tenue emergió de la oscuridad, haciendo desvanecer las sombras y revelando un mundo interior lleno de misterios.\n\nIMAGEN_EN: Cueva oscura con una luna alta brillando por la abertura de la puerta. \n\nSONIDO: GARRAS RESOLLANTES",
+      "sound_tag": "magia",
+      "sound_name": "Destellos mágicos",
+      "image": "/api/media/exp/scene_4_4042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, main character : ani, a young explorer of ears., cueva oscura con una luna alta brillando por la abertura de la puerta., un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un",
+      "image_seed": 4042,
+      "audio": "/api/media/exp/voice_4.wav",
+      "audio_duration": 29.62,
+      "ambient": "/api/media/exp/ambient_4.wav"
+    },
+    {
+      "index": 5,
+      "text": "Ana respiró hondo, sosteniéndose con la mano derecha contra la pared oscura de la cueva. Un leve murmullo proveniente de una caverna atrás de ella hizo que su pulso discurrir rápido, cada vibración reflejando el sonido que estaba buscando. Con pasos cautelosos, la niña cruzó el último tramo, abriendo la pequeña puerta que había encontrado justo antes de entrar en una selva interna, donde las luces se extinguieron lentamente, dejando paso a una penumbra densa.",
+      "image_en": "Una figura femenina, de cabellos rubios y una máscara antigua sobre el rostro, observa atentamente a la niña que intenta entrar en la caverna. Las luces están apagadas, solo una lúmen misterioso ilumina el fondo oscuro d",
+      "raw": "Texto:\nAna respiró hondo, sosteniéndose con la mano derecha contra la pared oscura de la cueva. Un leve murmullo proveniente de una caverna atrás de ella hizo que su pulso discurrir rápido, cada vibración reflejando el sonido que estaba buscando. Con pasos cautelosos, la niña cruzó el último tramo, abriendo la pequeña puerta que había encontrado justo antes de entrar en una selva interna, donde las luces se extinguieron lentamente, dejando paso a una penumbra densa.\n\nImagen_en:\nUna figura femenina, de cabellos rubios y una máscara antigua sobre el rostro, observa atentamente a la niña que intenta entrar en la caverna. Las luces están apagadas, solo una lúmen misterioso ilumina el fondo oscuro de la cueva. \n\nSonido: Bosque",
+      "sound_tag": "bosque",
+      "sound_name": "Bosque con pájaros",
+      "image": "/api/media/exp/scene_5_5042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, main character : ani, a young explorer of ears., una figura femenina, de cabellos rubios y una máscara antigua sobre el rostro, observa atentamente a la niña que intenta entrar en la caverna. las luces están ap",
+      "image_seed": 5042,
+      "audio": "/api/media/exp/voice_5.wav",
+      "audio_duration": 36.39,
+      "ambient": "/api/media/exp/ambient_5.wav"
+    }
+  ],
+  "metrics": {
+    "text_s": 1088.7,
+    "image_s": [
+      27.77,
+      29.22,
+      32.38,
+      32.97,
+      32.99
+    ],
+    "tts_s": [
+      21.61,
+      16.87,
+      14.02,
+      19.51,
+      23.28
+    ],
+    "ambient_s": [
+      0.21,
+      0.15,
+      0.19,
+      0.17,
+      0.27
+    ],
+    "tokens": 1571,
+    "audio_s": [
+      37.42,
+      29.34,
+      19.57,
+      29.62,
+      36.39
+    ],
+    "scene_words": [
+      75,
+      59,
+      43,
+      61,
+      75
+    ],
+    "clip_mean": 0.8505,
+    "clip_min": 0.7907,
+    "clip_vs_first": [
+      0.7907,
+      0.877,
+      0.846,
+      0.8538
+    ],
+    "clip_s": 2.68,
+    "total_s": 1352.47,
+    "protagonist_mentions": 4
+  }
+}

@@ -181,7 +181,7 @@ export default function Experiments() {
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-amber-300/80 font-sans-ui flex items-center gap-2"><FlaskConical className="h-3.5 w-3.5" /> Laboratorio</div>
           <h1 className="font-display text-4xl sm:text-5xl text-amber-100 mt-2">Panel de experimentos</h1>
-          <p className="font-prose text-lg text-slate-300 mt-2 max-w-2xl">Cada cuento registra su configuración, los tiempos de cada módulo y una métrica objetiva de consistencia visual (similitud CLIP entre escenas, de 0 a 1).</p>
+          <p className="font-prose text-lg text-slate-300 mt-2 max-w-2xl">Cada cuento registra su configuración y tiempos por módulo. CLIP calcula similitud entre imágenes; es una señal visual exploratoria, no una prueba de identidad del personaje.</p>
         </div>
         <Button data-testid="experiments-export-csv" disabled={!rows?.length} onClick={() => exportCsv(rows)} className="bg-amber-400 hover:bg-amber-300 text-slate-950">
           <Download className="h-4 w-4 mr-2" /> Exportar CSV
@@ -198,7 +198,7 @@ export default function Experiments() {
           <h2 className="font-display text-2xl text-amber-100 mt-2">¿La consistencia ayuda a mantener al personaje?</h2>
           <p className="font-prose text-slate-300 mt-1 max-w-3xl">
             Genera dos cuentos con la misma idea, género, perfil y semilla. Compara OFF (sin la estrategia de consistencia)
-            con ON, usando las cinco imágenes, la similitud CLIP y los tiempos medidos. Los modelos locales pueden tardar varios minutos.
+            con ON, usando las cinco imágenes, similitud CLIP y tiempos medidos. CLIP no identifica personajes y un solo par de cuentos no permite concluir que la estrategia siempre funcione. Los modelos locales pueden tardar varios minutos.
           </p>
         </div>
         <form onSubmit={startComparison} className="grid md:grid-cols-2 xl:grid-cols-4 gap-3 items-end">

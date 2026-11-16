@@ -12,7 +12,16 @@ function Step({ done, active, Icon, label }) {
 
 export function GenerationProgress({ story }) {
   const pct = Math.round((story.progress / story.total_steps) * 100);
-  const phase = story.progress < 6 ? "text" : story.progress < 11 ? "image" : "audio";
+  const stage = story.stage || "";
+  const sceneMatch = stage.match(/escena (\d+)/i);
+  const activeScene = sceneMatch ? Number(sceneMatch[1]) - 1 : -1;
+  const activePhase = stage.startsWith("Escribiendo")
+    ? "text"
+    : stage.startsWith("Ilustrando")
+      ? "image"
+      : stage.startsWith("Narrando")
+        ? "audio"
+        : null;
   return (
     <div data-testid="generation-progress" className="parchment paper-grain rounded-2xl p-5 sm:p-6 animate-fade-up">
       <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -38,12 +47,12 @@ export function GenerationProgress({ story }) {
         {[0, 1, 2, 3, 4].map((i) => {
           const sc = story.scenes[i];
           return (
-            <div key={i} className="rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2">
+            <div key={i} className={`rounded-lg border bg-slate-950/40 px-3 py-2 ${activeScene === i ? "border-amber-400/50" : "border-white/10"}`}>
               <div className="text-xs font-sans-ui text-amber-200/90 mb-1">Escena {i + 1}</div>
               <div className="flex flex-wrap gap-x-2 gap-y-1">
-                <Step done={!!sc} active={!sc && phase === "text" && story.scenes.length === i} Icon={Feather} label="texto" />
-                <Step done={!!sc?.image} active={phase === "image" && sc && !sc.image && story.scenes.filter((s) => s.image).length === i} Icon={ImageIcon} label="imagen" />
-                <Step done={!!sc?.audio} active={phase === "audio" && sc && !sc.audio && story.scenes.filter((s) => s.audio).length === i} Icon={AudioLines} label="audio" />
+                <Step done={!!sc?.text} active={activeScene === i && activePhase === "text"} Icon={Feather} label="texto" />
+                <Step done={!!sc?.image} active={activeScene === i && activePhase === "image"} Icon={ImageIcon} label="imagen" />
+                <Step done={!!sc?.audio} active={activeScene === i && activePhase === "audio"} Icon={AudioLines} label="audio" />
               </div>
             </div>
           );

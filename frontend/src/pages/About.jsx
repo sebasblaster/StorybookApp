@@ -5,7 +5,7 @@ const STEPS = [
   { Icon: MonitorSmartphone, title: "Interfaz React", sub: "Idea + género + parámetros" },
   { Icon: Database, title: "API FastAPI + cola", sub: "Trabajo persistido en SQLite (sin servidor de base de datos)" },
   { Icon: Feather, title: "Texto · Qwen2.5-Instruct", sub: "Biblia del personaje + 5 escenas con arco narrativo" },
-  { Icon: ImageIcon, title: "Imagen · SD-Turbo / SDXL-Turbo", sub: "Estilo fijo por género + descripción del protagonista + semilla compartida (+ IP-Adapter en perfil calidad)" },
+  { Icon: ImageIcon, title: "Imagen · SD-Turbo / SDXL-Turbo", sub: "Estilo fijo por género + descripción del protagonista + semilla base reproducible (+ IP-Adapter en perfil calidad)" },
   { Icon: Mic2, title: "Voz · Meta MMS-TTS (VITS)", sub: "Narración en español, WAV por escena" },
   { Icon: Music, title: "Ambiente · síntesis procedural", sub: "12 paisajes sonoros elegidos por el modelo de texto" },
 ];
@@ -22,7 +22,7 @@ const MODELS = [
 const CONSISTENCY = [
   "Biblia del personaje: el modelo define nombre y rasgos visuales una sola vez y se reutilizan en todas las escenas.",
   "Contexto acumulado: cada escena se escribe leyendo las anteriores y siguiendo un arco de 5 actos.",
-  "Estilo visual fijo por género + misma semilla de difusión para mantener paleta y composición.",
+  "Semilla base reproducible con una semilla derivada distinta por escena; esto no garantiza identidad visual.",
   "IP-Adapter (perfil calidad): la primera ilustración sirve de referencia visual para las demás.",
   "Ambiente sonoro coherente: una capa base del género mezclada con el efecto específico de cada escena.",
   "Verificación objetiva: similitud CLIP entre las cinco ilustraciones, registrada en el panel de experimentos.",
@@ -33,8 +33,8 @@ export default function About() {
     <main className="relative max-w-6xl mx-auto px-6 py-10 sm:py-14 space-y-10">
       <div className="animate-fade-up">
         <div className="text-xs uppercase tracking-[0.3em] text-amber-300/80 font-sans-ui">Cómo funciona</div>
-        <h1 className="font-display text-4xl sm:text-5xl text-amber-100 mt-2">Arquitectura 100% local</h1>
-        <p className="font-prose text-lg text-slate-300 mt-3 max-w-3xl">Ninguna parte del cuento sale de tu computadora: los modelos abiertos se descargan una vez desde Hugging Face y luego todo funciona sin internet, sin APIs pagas ni servicios remotos.</p>
+        <h1 className="font-display text-4xl sm:text-5xl text-amber-100 mt-2">Inferencia local</h1>
+        <p className="font-prose text-lg text-slate-300 mt-3 max-w-3xl">Los modelos se descargan previamente desde Hugging Face. Con los pesos disponibles en caché, la generación está diseñada para ejecutarse en el backend local sin APIs de inferencia externas. La comunicación entre la interfaz y el backend sigue ocurriendo en el equipo; valida el modo desconectado antes de afirmar que fue probado.</p>
       </div>
 
       <div data-testid="architecture-diagram" className="parchment paper-grain rounded-2xl p-6 grid md:grid-cols-3 gap-4">
@@ -47,6 +47,7 @@ export default function About() {
           </div>
         ))}
       </div>
+      <p className="font-sans-ui text-sm text-slate-400">El pipeline procesa cada escena en secuencia: texto, ilustración, voz y ambiente; después continúa con la siguiente. Las semillas de imagen se derivan de una semilla base para que cada escena use una distinta y reproducible.</p>
 
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="parchment rounded-2xl p-6">
@@ -68,7 +69,7 @@ export default function About() {
               ))}
             </tbody>
           </table>
-          <p className="mt-4 text-xs text-slate-500 font-sans-ui">Para uso comercial futuro habría que sustituir imagen y voz por alternativas con licencia abierta (por ejemplo FLUX.1-schnell y Piper). La arquitectura de módulos lo permite cambiando solo los perfiles.</p>
+          <p className="mt-4 text-xs text-slate-500 font-sans-ui">Revisa las condiciones vigentes de cada modelo para el uso previsto; las licencias y restricciones no son equivalentes entre modelos.</p>
         </div>
       </div>
     </main>

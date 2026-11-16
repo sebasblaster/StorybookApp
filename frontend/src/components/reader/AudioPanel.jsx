@@ -26,7 +26,7 @@ export function AudioPanel({ audio, scene }) {
     );
   }
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
       <div className="rounded-xl border border-amber-400/20 bg-slate-950/50 p-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2 text-amber-200 font-sans-ui text-sm">

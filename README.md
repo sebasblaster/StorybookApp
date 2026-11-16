@@ -1,8 +1,9 @@
-# Storybook — cuentos ilustrados, narrados y ambientados, 100 % en local
+# Storybook — cuentos ilustrados, narrados y ambientados con inferencia local
 
 Storybook convierte una **idea** y un **género** en un cuento de **exactamente cinco escenas** con texto, ilustración original,
-narración con voz sintética y ambiente sonoro. Todo se genera en tu computadora con modelos abiertos de Hugging Face:
-**sin APIs de pago, sin servicios remotos y sin internet** una vez descargados los modelos.
+narración con voz sintética y ambiente sonoro cuando la generación finaliza correctamente. Los pesos se descargan previamente
+desde Hugging Face; con los modelos en caché, la inferencia se ejecuta localmente, sin APIs de generación externas. La interfaz
+y el backend local se comunican mediante HTTP en el mismo equipo.
 
 | Módulo | Modelo / técnica | Licencia |
 |---|---|---|
@@ -30,12 +31,12 @@ narración con voz sintética y ambiente sonoro. Todo se genera en tu computador
 ## Requisitos
 | Perfil | Hardware | Tiempo aprox. por cuento* |
 |---|---|---|
-| `ligero` | CPU 4+ núcleos, 12 GB RAM, ~8 GB de disco | decenas de minutos |
-| `equilibrado` | GPU NVIDIA 8 GB+ VRAM, 16 GB RAM, ~15 GB de disco | pocos minutos |
-| `calidad` | GPU NVIDIA 12 GB+ VRAM, 16–32 GB RAM, ~30 GB de disco | pocos minutos |
+| `ligero` | CPU 4+ núcleos, 12 GB RAM, ~8 GB de disco | Medir en el equipo |
+| `equilibrado` | GPU NVIDIA 8 GB+ VRAM, 16 GB RAM, ~15 GB de disco | Medir en el equipo |
+| `calidad` | GPU NVIDIA 12 GB+ VRAM, 16–32 GB RAM, ~30 GB de disco | Medir en el equipo |
 
-\* Estimaciones. En el entorno de desarrollo (CPU de 2 núcleos, sin GPU, perfil ligero) un cuento tardó ≈ 28 minutos. **Mide los
-tiempos en tu hardware** con `scripts/run_experiments.py` y regístralos en el informe.
+Los tiempos dependen del hardware, el perfil y los modelos disponibles; no se promete una duración fija. Mide los tiempos en tu
+equipo con `scripts/run_experiments.py` y registra los resultados y la configuración.
 
 Software: Python 3.11 o 3.12, Node.js 18+, Git. Para GPU: driver NVIDIA reciente (CUDA 12.1 lo trae PyTorch).
 
@@ -65,7 +66,8 @@ python scripts/download_models.py --profile equilibrado    # ligero | equilibrad
 Se guardan en la caché de Hugging Face (`~/.cache/huggingface`, o la carpeta de `HF_HOME`).
 
 ### 3. Modo sin conexión
-Agrega `HF_HUB_OFFLINE=1` en `backend/.env`. Desde ahí la app **no hace ninguna conexión de red**.
+Agrega `HF_HUB_OFFLINE=1` en `backend/.env` y confirma que todos los modelos requeridos están descargados. Para demostrar el modo
+desconectado, inicia el backend y frontend con internet deshabilitado; la interfaz y el backend seguirán comunicándose por localhost.
 ```bash
 uvicorn server:app --host 127.0.0.1 --port 8001
 ```
@@ -77,27 +79,36 @@ cp .env.example .env                 # REACT_APP_BACKEND_URL=http://localhost:80
 npm install
 npm start                            # http://localhost:3000
 ```
-Las tipografías están empaquetadas con la app (`@fontsource`): funciona sin internet.
+Las tipografías están empaquetadas con la app (`@fontsource`), por lo que no requieren una descarga en tiempo de ejecución.
 
 ## Ejemplo de uso
 1. Crear cuenta → **Crear Cuento**.
 2. Idea: *«una niña que colecciona sonidos del bosque»* · Género: Fantasía → **Tejer mi cuento**.
 3. Ver el avance en vivo; al terminar, recorrer las 5 escenas, activar **Reproducción automática** y exportar el PDF.
-4. Repetir con la misma semilla y la consistencia desactivada; comparar en **Experimentos**.
+4. Repetir con la misma semilla base y la consistencia desactivada; cada escena usa una semilla derivada distinta. Comparar en **Experimentos**.
 
 ## Evidencias para el informe
 ```bash
-python scripts/run_experiments.py --profile equilibrado                      # 3 combos × {off, on}
-python scripts/run_experiments.py --profile calidad --strategies off on ip   # añade IP-Adapter
+python backend/scripts/run_experiments.py --profile ligero --strategies off on --combos 3 --seed 42  # seis corridas; puede tardar horas en CPU
+python backend/scripts/run_experiments.py --profile calidad --strategies off on ip --seed 42   # añade IP-Adapter
 ```
 Crea `docs/evidencias/<fecha>/` con, por cada corrida: las 5 ilustraciones, audios, `story.json`, `contact_sheet.jpg`
 (las cinco escenas en fila, para comparar el personaje) y al final `resultados.csv` / `resultados.md`.
+CLIP reporta similitud entre imágenes, pero no confirma identidad del personaje. Tres pares ON/OFF son evidencia exploratoria,
+no una prueba estadística general; conserva las hojas de contacto y declara las limitaciones.
 
 ## Pruebas automáticas
 ```bash
 cd backend
 pip install -r requirements-dev.txt
 python -m unittest discover -s tests -t . -v        # no requiere descargar modelos
+```
+
+Pruebas de interfaz y compilación:
+```bash
+cd frontend
+npm test -- --watchAll=false
+npm run build
 ```
 
 ## Estructura

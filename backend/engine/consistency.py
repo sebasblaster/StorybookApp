@@ -1,7 +1,7 @@
-"""Objective visual-consistency metric: cosine similarity between CLIP embeddings of the 5 scenes.
+"""Exploratory image-similarity metric: cosine similarity between CLIP embeddings of the 5 scenes.
 
 CLIP is used ONLY to measure; it never takes part in generating the story.
-Higher mean similarity = scenes look more alike (same character / palette / style).
+Higher similarity means the image embeddings are more alike; it does not prove character identity.
 """
 import numpy as np
 

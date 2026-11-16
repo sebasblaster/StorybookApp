@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -21,12 +21,22 @@ export default function Create() {
   const [genre, setGenre] = useState("fantasia");
   const [loading, setLoading] = useState(false);
   const [sys, setSys] = useState(null);
+  const [sysError, setSysError] = useState("");
   const [opts, setOpts] = useState({ profile: "", seed: "", image_steps: 0, temperature: 0.8, consistency: true });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    api.get("/system").then(({ data }) => { setSys(data); setOpts((o) => ({ ...o, profile: data.default_profile })); }).catch(() => {});
+  const loadSystem = useCallback(async () => {
+    setSysError("");
+    try {
+      const { data } = await api.get("/system");
+      setSys(data);
+      setOpts((o) => ({ ...o, profile: data.default_profile }));
+    } catch (err) {
+      setSysError(formatApiError(err.response?.data?.detail) || "No se pudo consultar el dispositivo ni los modelos disponibles.");
+    }
   }, []);
+
+  useEffect(() => { loadSystem(); }, [loadSystem]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -148,9 +158,9 @@ export default function Create() {
             <ol className="mt-5 space-y-3 font-sans-ui text-sm text-slate-300">
               {[
                 "Qwen2.5 crea el título, el protagonista y su descripción visual.",
-                "Escribe 5 escenas: inicio, desarrollo, conflicto, clímax y desenlace.",
-                "Stable Diffusion Turbo ilustra cada escena con el mismo estilo y personaje.",
-                "MMS-TTS narra en español y se sintetiza un ambiente sonoro por escena.",
+                "Escribe el texto de la primera escena y crea su ilustración.",
+                "Genera la narración y el ambiente de esa escena antes de pasar a la siguiente.",
+                "Repite el proceso para completar las cinco escenas conectadas.",
               ].map((t, i) => (
                 <li key={t} className="flex items-start gap-3">
                   <span className="h-5 w-5 shrink-0 rounded-full border border-amber-400/50 text-amber-300 text-[11px] flex items-center justify-center">{i + 1}</span>
@@ -158,12 +168,20 @@ export default function Create() {
                 </li>
               ))}
             </ol>
+            {sysError && (
+              <div role="alert" className="mt-6 rounded-xl border border-rose-400/30 bg-rose-950/30 p-4 text-sm text-rose-200 font-sans-ui">
+                <p>{sysError}</p>
+                <Button type="button" variant="outline" onClick={loadSystem} className="mt-3 border-rose-300/30 text-rose-100 bg-transparent hover:bg-rose-400/10">
+                  Volver a consultar
+                </Button>
+              </div>
+            )}
             {sys && (
               <div data-testid="create-device-info" className="mt-6 rounded-xl border border-amber-400/20 bg-slate-950/50 p-4 text-xs font-sans-ui text-slate-400 flex gap-3">
                 <Cpu className="h-4 w-4 text-amber-300 shrink-0" />
                 <span>
                   Ejecutando en <b className="text-amber-200">{sys.device === "cuda" ? sys.gpu : "CPU"}</b>.{" "}
-                  {sys.device === "cuda" ? "Un cuento completo tarda aproximadamente 1–3 minutos." : "Sin GPU, la generación puede tardar varios minutos; puedes volver más tarde."}
+                  El tiempo depende del perfil y del equipo; revisa las mediciones de tus ejecuciones en Experimentos.
                   {sys.queue_size > 0 && ` Hay ${sys.queue_size} cuento(s) en cola.`}
                 </span>
               </div>

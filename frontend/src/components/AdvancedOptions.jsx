@@ -64,7 +64,7 @@ export function AdvancedOptions({ sys, opts, setOpts, disabled }) {
             <Slider data-testid="advanced-temperature-slider" className="mt-3" min={0} max={1.3} step={0.05} value={[opts.temperature]} onValueChange={(v) => set("temperature")(v[0])} disabled={disabled} />
           </div>
           <label className="flex items-center justify-between gap-3">
-            <span className="text-amber-200/90">Estrategia de consistencia<span className="block text-[11px] text-slate-400">personaje, contexto y semilla compartidos</span></span>
+            <span className="text-amber-200/90">Estrategia de consistencia<span className="block text-[11px] text-slate-400">biblia y contexto; semilla base distinta por escena</span></span>
             <Switch data-testid="advanced-consistency-switch" checked={opts.consistency} onCheckedChange={set("consistency")} disabled={disabled} />
           </label>
         </div>

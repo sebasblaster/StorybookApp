@@ -1,0 +1,147 @@
+{
+  "idea": "una niña que colecciona sonidos del bosque",
+  "genre": "fantasia",
+  "config": {
+    "profile": "ligero",
+    "text_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "text_quant": null,
+    "image_model": "stabilityai/sd-turbo",
+    "tts_model": "facebook/mms-tts-spa",
+    "image_size": 512,
+    "image_steps": 2,
+    "temperature": 0.8,
+    "seed": 42,
+    "ip_adapter": false,
+    "consistency": false,
+    "device": "cpu"
+  },
+  "plan": {
+    "title": "El Rincón de los Sonidos",
+    "protagonist": "Ana, una pequeña exploradora de oídos.",
+    "protagonist_en": "Ani, a young explorer of ears.",
+    "setting_en": "Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río.",
+    "raw": "**TITULO:** \"El Rincón de los Sonidos\"\n\n**PROTAGONISTA:** Ana, una pequeña exploradora de oídos.\n\n**PROTAGONISTA_EN:** Ani, a young explorer of ears.\n\n**ESCENARIO_EN:** Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río."
+  },
+  "scenes": [
+    {
+      "index": 1,
+      "text": "En las sombras densas de un bosque, Lucy, pequeña niña de pelo castaño y ojos azules, observaba detenidamente el mosaico de sonidos que fluían entre las ramas altas. Sus dedos acertijosos tocaron sobre una joya antigua que guardaba en su bolsillo interior. Lucy sintió como si sus oídos estuvieran llenándose de nuevas melodías, cada vez más claras y distintas a las que había conocido antes. Cada sonido parecía tener su propia vida y emociones, transformando el silencio de la noche en algo vibrante e interesante.",
+      "image_en": "Dulce luz lunar iluminaba las hojas secas, formando un resplandor dorado bajo el tronco grueso de una especie rara de abeja que volaba entre los árboles. Las hojas vibraban con un ritmo incómodo, como si estuvieran baila",
+      "raw": "Texto:\nEn las sombras densas de un bosque, Lucy, pequeña niña de pelo castaño y ojos azules, observaba detenidamente el mosaico de sonidos que fluían entre las ramas altas. Sus dedos acertijosos tocaron sobre una joya antigua que guardaba en su bolsillo interior.\n\nImagen EN:\nDulce luz lunar iluminaba las hojas secas, formando un resplandor dorado bajo el tronco grueso de una especie rara de abeja que volaba entre los árboles. Las hojas vibraban con un ritmo incómodo, como si estuvieran bailando ante la cámara invisible.\n\nSonido: Viento",
+      "sound_tag": "viento",
+      "sound_name": "Viento ululante",
+      "image": "/api/media/exp/scene_1_1042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, Dulce luz lunar iluminaba las hojas secas, formando un resplandor dorado bajo el tronco grueso de una especie rara de abeja que volaba entre los árboles. Las hojas vibraban con un ritmo incómodo, como si estuvieran baila",
+      "image_seed": 1042,
+      "audio": "/api/media/exp/voice_1.wav",
+      "audio_duration": 42.96,
+      "ambient": "/api/media/exp/ambient_1.wav"
+    },
+    {
+      "index": 2,
+      "text": "ESCENA 2 La pequeña Ana seguía jugando con su colección de instrumentos silenciosos mientras el sol se ocultaba tras las colinas de oro y rubí. Sin embargo, una nube grises comenzó a cubrir el cielo, anunciando el fin de la tarde. Aunque le gustaba este ritmo constante de la naturaleza, ahora quería algo más. Necesitaba un descanso de la melodía eterna.",
+      "image_en": "Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río.",
+      "raw": "ESCENA 2\n\nLa pequeña Ana seguía jugando con su colección de instrumentos silenciosos mientras el sol se ocultaba tras las colinas de oro y rubí. Sin embargo, una nube grises comenzó a cubrir el cielo, anunciando el fin de la tarde. Aunque le gustaba este ritmo constante de la naturaleza, ahora quería algo más. Necesitaba un descanso de la melodía eterna.\n\nEL IMAGEN_EN:\n\nLa tarde caía sobre un bosque de roble, lleno de luces doradas reflejándose en los ríos de agua cristalina. El cielo estaba encapotado, lleno de sombras que parecían flotar entre las ramas. Un frescor frío recorría todo el lugar, pero Ana continuó sonriendo, incapaz de detenerse de su pasión por estos sonidos mágicos.\n\nLOS SONIDOS:\n\nFUEGO",
+      "sound_tag": "magia",
+      "sound_name": "Destellos mágicos",
+      "image": "/api/media/exp/scene_2_2042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, Un bosque húmedo y profundo, lleno de hojas caídas, senderos entre las ramas, y un claro donde fluye el río.",
+      "image_seed": 2042,
+      "audio": "/api/media/exp/voice_2.wav",
+      "audio_duration": 29.86,
+      "ambient": "/api/media/exp/ambient_2.wav"
+    },
+    {
+      "index": 3,
+      "text": "ESCENA 3: El bosque oscuro parecía respirar bajo las sombras densas. Los árboles antiguos midían casi doscientos años y sus hojas se movían como fantasmas en la bruma. La luz de la luna bailaba entre los ríos de colores que fluían a través del bosque, suavemente reflejada en las aguas cristalinas y las ramas que rozaban con ellas.",
+      "image_en": "En la penumbra, un puñado de sombras bailaban alrededor de la cima de un gran árbol viejo. Las luces doradas de las estrellas brillaban sobre su hombro.",
+      "raw": "ESCENA 3: El bosque oscuro parecía respirar bajo las sombras densas. Los árboles antiguos midían casi doscientos años y sus hojas se movían como fantasmas en la bruma.\n\nIMAGEN_EN: En la penumbra, un puñado de sombras bailaban alrededor de la cima de un gran árbol viejo. Las luces doradas de las estrellas brillaban sobre su hombro.\n\nSONIDO: Lluvia",
+      "sound_tag": "lluvia",
+      "sound_name": "Lluvia suave",
+      "image": "/api/media/exp/scene_3_3042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, En la penumbra, un puñado de sombras bailaban alrededor de la cima de un gran árbol viejo. Las luces doradas de las estrellas brillaban sobre su hombro.",
+      "image_seed": 3042,
+      "audio": "/api/media/exp/voice_3.wav",
+      "audio_duration": 27.63,
+      "ambient": "/api/media/exp/ambient_3.wav"
+    },
+    {
+      "index": 4,
+      "text": "En la oscura cueva, la luz de la luna reflejaba el río de sangre que fluye desde las profundidades del corazón de la tierra. La joven coleccionista, su rostro pálido bajo la máscara dorada, observó cómo el viento soplaba sobre las hojas de un árbol ancestral, creando una melodía de jadeos y chasquidos que resonaban en el silencio espeso.",
+      "image_en": "Cueva oscura, luna brillante, luz filtrándose, río de sangre, viento soplando, hojas gemelas",
+      "raw": "Texto:\n\nEn la oscura cueva, la luz de la luna reflejaba el río de sangre que fluye desde las profundidades del corazón de la tierra. La joven coleccionista, su rostro pálido bajo la máscara dorada, observó cómo el viento soplaba sobre las hojas de un árbol ancestral, creando una melodía de jadeos y chasquidos que resonaban en el silencio espeso.\n\nImagen_en: Cueva oscura, luna brillante, luz filtrándose, río de sangre, viento soplando, hojas gemelas\n\nSonido: Lluvia",
+      "sound_tag": "lluvia",
+      "sound_name": "Lluvia suave",
+      "image": "/api/media/exp/scene_4_4042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, Cueva oscura, luna brillante, luz filtrándose, río de sangre, viento soplando, hojas gemelas",
+      "image_seed": 4042,
+      "audio": "/api/media/exp/voice_4.wav",
+      "audio_duration": 23.63,
+      "ambient": "/api/media/exp/ambient_4.wav"
+    },
+    {
+      "index": 5,
+      "text": "La niña echó un último vistazo al armario oscuro antes de encender las luces. El silencio del bosque parecía haberse hecho aún más profundo, llenando cada rincón con sus secretos. Las hojas de los árboles eran como letras misteriosas que se hablaban entre sí, mientras las ramas formaban una pantalla sombral. Cuando el sol se elevó por la ventana, la niña abrió la puerta de la cocina para tomar un poco de café. Su aroma a leche y azúcar llenaba el aire, como si fuera una melodía tranquila en medio del caos de su vida cotidiana. La luz de la chimenea se filtró por la abertura de la puerta, reflejándose en el rostro sereno de la niña.",
+      "image_en": "Un sol brillante caía sobre el bosque, su luz dorada iluminaba los ríos que cruzaban las montañas en dirección al ocaso.",
+      "raw": "Texto:\nLa niña echó un último vistazo al armario oscuro antes de encender las luces. El silencio del bosque parecía haberse hecho aún más profundo, llenando cada rincón con sus secretos. Las hojas de los árboles eran como letras misteriosas que se hablaban entre sí, mientras las ramas formaban una pantalla sombral.\n\nImagen_en:\nUn sol brillante caía sobre el bosque, su luz dorada iluminaba los ríos que cruzaban las montañas en dirección al ocaso.\n\nSonido: Mar.",
+      "sound_tag": "mar",
+      "sound_name": "Oleaje del mar",
+      "image": "/api/media/exp/scene_5_5042.jpg",
+      "image_prompt": "storybook gouache illustration, magical golden light, violet and gold palette, Un sol brillante caía sobre el bosque, su luz dorada iluminaba los ríos que cruzaban las montañas en dirección al ocaso.",
+      "image_seed": 5042,
+      "audio": "/api/media/exp/voice_5.wav",
+      "audio_duration": 52.45,
+      "ambient": "/api/media/exp/ambient_5.wav"
+    }
+  ],
+  "metrics": {
+    "text_s": 1077.23,
+    "image_s": [
+      39.66,
+      20.56,
+      37.54,
+      28.34,
+      26.69
+    ],
+    "tts_s": [
+      25.92,
+      12.03,
+      20.34,
+      14.78,
+      29.27
+    ],
+    "ambient_s": [
+      0.24,
+      0.1,
+      0.2,
+      0.19,
+      0.24
+    ],
+    "tokens": 1192,
+    "audio_s": [
+      42.96,
+      29.86,
+      27.63,
+      23.63,
+      52.45
+    ],
+    "scene_words": [
+      85,
+      61,
+      58,
+      59,
+      117
+    ],
+    "clip_mean": 0.8418,
+    "clip_min": 0.7371,
+    "clip_vs_first": [
+      0.8498,
+      0.9134,
+      0.8635,
+      0.879
+    ],
+    "clip_s": 2.54,
+    "total_s": 1345.91,
+    "protagonist_mentions": 2
+  }
+}

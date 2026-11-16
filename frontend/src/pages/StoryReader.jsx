@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { ChevronLeft, ChevronRight, ArrowLeft, Loader2, Repeat, AlertTriangle, RefreshCw, FileDown, Wand2, Cpu, Save, Volume2, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, ArrowLeft, Loader2, Repeat, AlertTriangle, RefreshCw, FileDown, Wand2, Cpu, Save, Volume2, RotateCcw } from "lucide-react";
 import { api, mediaUrl, formatApiError, downloadPdf } from "@/lib/api";
 import { GENRE_BY_ID } from "@/lib/genres";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { AudioPanel } from "@/components/reader/AudioPanel";
 import { GenerationProgress } from "@/components/reader/GenerationProgress";
 import { StoryActions } from "@/components/reader/StoryActions";
@@ -15,7 +16,7 @@ import { useSceneAudio } from "@/components/reader/useSceneAudio";
 function SceneImage({ scene, total }) {
   return (
     <div className="parchment paper-grain rounded-2xl overflow-hidden relative">
-      <div className="relative aspect-square overflow-hidden" data-testid="reader-illustration">
+      <div className="relative h-[min(48vh,420px)] w-full max-w-[420px] mx-auto overflow-hidden" data-testid="reader-illustration">
         {scene?.image && !scene.regenerating ? (
           <img key={scene.image} src={mediaUrl(scene.image)} alt={`Escena ${scene.index}`} className="absolute inset-0 w-full h-full object-cover animate-scene-in" />
         ) : (
@@ -68,53 +69,59 @@ function SceneWorkshop({ storyId, scene, onStoryChange, refresh }) {
   };
 
   return (
-    <section className="rounded-xl border border-amber-400/20 bg-slate-950/40 p-4" data-testid="scene-workshop">
-      <label htmlFor={`scene-text-${scene.index}`} className="text-xs uppercase tracking-[0.2em] text-amber-300/80 font-sans-ui">
+    <Collapsible className="rounded-xl border border-amber-400/20 bg-slate-950/40 px-4" data-testid="scene-workshop">
+      <CollapsibleTrigger data-testid="scene-workshop-toggle" className="group w-full flex items-center justify-between gap-3 py-3 text-left text-xs uppercase tracking-[0.2em] text-amber-300/80 font-sans-ui">
         Taller · editar esta escena
-      </label>
-      <Textarea
-        id={`scene-text-${scene.index}`}
-        data-testid="scene-edit-input"
-        value={draft}
-        maxLength={2000}
-        onChange={(e) => setDraft(e.target.value)}
-        disabled={busy || saving}
-        rows={5}
-        className="mt-2 bg-slate-950/60 border-amber-500/20 text-amber-50 font-prose leading-relaxed"
-      />
-      <div className="mt-2 flex items-center justify-between gap-2 text-xs text-slate-400 font-sans-ui">
-        <span>{draft.length}/2000 caracteres</span>
-        {scene.audio_stale && <span className="text-amber-200">La narración aún corresponde a la versión anterior.</span>}
-      </div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Button data-testid="scene-save-button" size="sm" onClick={saveText} disabled={!dirty || saving || busy}
-          className="bg-amber-400 hover:bg-amber-300 text-slate-950 disabled:opacity-40">
-          {saving ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Save className="h-4 w-4 mr-1" />}
-          Guardar texto
-        </Button>
-        <Button data-testid="scene-narrate-button" size="sm" variant="outline" onClick={narrate}
-          disabled={dirty || saving || narrating || busy}
-          className="border-amber-400/30 text-amber-100 bg-transparent hover:bg-amber-400/10 disabled:opacity-40">
-          {narrating || scene.audio_regenerating ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Volume2 className="h-4 w-4 mr-1" />}
-          {scene.audio_regenerating ? "Narrando…" : "Actualizar narración"}
-        </Button>
-      </div>
-      {scene.audio_error && <p role="alert" className="mt-2 text-sm text-rose-300">{scene.audio_error}</p>}
-      {!!scene.text_versions?.length && (
-        <div className="mt-4 border-t border-white/10 pt-3">
-          <div className="text-xs uppercase tracking-[0.2em] text-slate-400 font-sans-ui">Versiones anteriores</div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {scene.text_versions.map((version, index) => (
-              <Button key={`${version.saved_at}-${index}`} size="sm" variant="ghost"
-                onClick={() => setDraft(version.text)} disabled={busy || saving}
-                className="text-amber-200/80 hover:bg-amber-400/10">
-                <RotateCcw className="h-3.5 w-3.5 mr-1" /> Restaurar versión {index + 1}
-              </Button>
-            ))}
+        <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+      </CollapsibleTrigger>
+      <CollapsibleContent className="pb-4">
+        <section>
+          <label htmlFor={`scene-text-${scene.index}`} className="sr-only">Texto de la escena {scene.index}</label>
+          <Textarea
+            id={`scene-text-${scene.index}`}
+            data-testid="scene-edit-input"
+            value={draft}
+            maxLength={2000}
+            onChange={(e) => setDraft(e.target.value)}
+            disabled={busy || saving}
+            rows={5}
+            className="bg-slate-950/60 border-amber-500/20 text-amber-50 font-prose leading-relaxed"
+          />
+          <div className="mt-2 flex items-center justify-between gap-2 text-xs text-slate-400 font-sans-ui">
+            <span>{draft.length}/2000 caracteres</span>
+            {scene.audio_stale && <span className="text-amber-200">La narración aún corresponde a la versión anterior.</span>}
           </div>
-        </div>
-      )}
-    </section>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Button data-testid="scene-save-button" size="sm" onClick={saveText} disabled={!dirty || saving || busy}
+              className="bg-amber-400 hover:bg-amber-300 text-slate-950 disabled:opacity-40">
+              {saving ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Save className="h-4 w-4 mr-1" />}
+              Guardar texto
+            </Button>
+            <Button data-testid="scene-narrate-button" size="sm" variant="outline" onClick={narrate}
+              disabled={dirty || saving || narrating || busy}
+              className="border-amber-400/30 text-amber-100 bg-transparent hover:bg-amber-400/10 disabled:opacity-40">
+              {narrating || scene.audio_regenerating ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Volume2 className="h-4 w-4 mr-1" />}
+              {scene.audio_regenerating ? "Narrando…" : "Actualizar narración"}
+            </Button>
+          </div>
+          {scene.audio_error && <p role="alert" className="mt-2 text-sm text-rose-300">{scene.audio_error}</p>}
+          {!!scene.text_versions?.length && (
+            <div className="mt-4 border-t border-white/10 pt-3">
+              <div className="text-xs uppercase tracking-[0.2em] text-slate-400 font-sans-ui">Versiones anteriores</div>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {scene.text_versions.map((version, index) => (
+                  <Button key={`${version.saved_at}-${index}`} size="sm" variant="ghost"
+                    onClick={() => setDraft(version.text)} disabled={busy || saving}
+                    className="text-amber-200/80 hover:bg-amber-400/10">
+                    <RotateCcw className="h-3.5 w-3.5 mr-1" /> Restaurar versión {index + 1}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
 
@@ -123,7 +130,7 @@ export default function StoryReader({ publicToken }) {
   const navigate = useNavigate();
   const [story, setStory] = useState(null);
   const [sceneIdx, setSceneIdx] = useState(0);
-  const [autoplay, setAutoplay] = useState(false);
+  const [autoplay, setAutoplay] = useState(true);
   const owner = !publicToken;
   const endpoint = owner ? `/stories/${id}` : `/public/stories/${publicToken}`;
 
@@ -155,12 +162,19 @@ export default function StoryReader({ publicToken }) {
   const goPrev = useCallback(() => setSceneIdx((i) => Math.max(0, i - 1)), []);
 
   const onVoiceEnded = useCallback(() => {
-    if (!autoplay) return;
+    if (!autoplay || story?.status !== "done") return;
     if (sceneIdx >= total - 1) { setAutoplay(false); toast.success("Fin del cuento"); return; }
     setTimeout(goNext, 1200);
-  }, [autoplay, sceneIdx, goNext]);
+  }, [autoplay, sceneIdx, goNext, story?.status]);
+  const onAutoplayBlocked = useCallback(() => {
+    toast.info("El navegador bloqueó la narración automática. Pulsa «Reproducir» para comenzar.");
+  }, []);
 
-  const audio = useSceneAudio(scene, { autoplay, onVoiceEnded });
+  const audio = useSceneAudio(scene, {
+    autoplay: autoplay && story?.status === "done",
+    onVoiceEnded,
+    onAutoplayBlocked,
+  });
 
   useEffect(() => {
     const onKey = (e) => {
@@ -210,8 +224,8 @@ export default function StoryReader({ publicToken }) {
         </div>
       </div>
 
-      <h1 data-testid="story-title" className="font-display text-3xl sm:text-4xl lg:text-5xl text-amber-100 leading-tight mt-4 animate-fade-up">{story.title}</h1>
-      {story.protagonist && <p className="font-prose italic text-slate-400 mt-2 text-lg">Protagonista: {story.protagonist}</p>}
+      <h1 data-testid="story-title" className="font-display text-center text-3xl sm:text-4xl lg:text-5xl text-amber-100 leading-tight mt-4 animate-fade-up">{story.title}</h1>
+      {story.protagonist && <p className="font-prose italic text-center text-slate-400 mt-2 text-lg">Protagonista: {story.protagonist}</p>}
 
       {busy && story.status !== "done" && <div className="mt-6"><GenerationProgress story={story} /></div>}
 
@@ -240,7 +254,7 @@ export default function StoryReader({ publicToken }) {
       )}
 
       {scene ? (
-        <div key={sceneIdx} className="mt-8 grid lg:grid-cols-[1fr_1fr] gap-8 items-start animate-scene-in">
+        <div key={sceneIdx} className="mt-8 grid max-w-6xl mx-auto lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-6 lg:gap-8 items-center animate-scene-in">
           <div>
             <SceneImage scene={scene} total={total} />
             {owner && story.status === "done" && (
@@ -249,19 +263,20 @@ export default function StoryReader({ publicToken }) {
               </Button>
             )}
           </div>
-          <div className="parchment paper-grain rounded-2xl p-6 sm:p-8 flex flex-col gap-6">
+          <div className="parchment paper-grain rounded-2xl p-5 sm:p-7 flex flex-col gap-5">
             <div>
-              <div className="text-xs uppercase tracking-[0.3em] text-amber-300/70 font-sans-ui">Fragmento {scene.index}</div>
-              <p data-testid="reader-scene-text" className="mt-3 font-prose text-xl sm:text-2xl text-slate-100/95 leading-relaxed">{scene.text}</p>
+              <div className="text-xs uppercase tracking-[0.3em] text-amber-300/70 font-sans-ui text-center">Fragmento {scene.index}</div>
+              <p data-testid="reader-scene-text" className="mt-3 max-w-2xl mx-auto text-center font-prose text-lg sm:text-xl text-slate-100/95 leading-relaxed">{scene.text}</p>
             </div>
             {owner && story.status === "done" && (
               <SceneWorkshop storyId={story.id} scene={scene} onStoryChange={setStory} refresh={load} />
             )}
             <AudioPanel audio={audio} scene={scene} />
-            <label className="flex items-center justify-between gap-3 rounded-xl border border-amber-400/20 bg-slate-950/50 p-4 cursor-pointer">
-              <span className="flex items-center gap-2 text-amber-200 font-sans-ui text-sm"><Repeat className="h-4 w-4" /> Reproducción automática
-                <span className="text-xs text-amber-300/60">narra y pasa de escena sola</span></span>
-              <Switch data-testid="autoplay-switch" checked={autoplay} disabled={story.status !== "done"} onCheckedChange={(v) => { setAutoplay(v); if (v) audio.play(); else audio.stopAll(); }} />
+            <label className="flex items-center justify-between gap-3 rounded-xl border border-amber-400/20 bg-slate-950/50 p-3 cursor-pointer">
+              <span className="flex items-center gap-2 text-amber-200 font-sans-ui text-sm"><Repeat className="h-4 w-4 shrink-0" />
+                <span>Narración automática<span className="block text-xs text-amber-300/60">activada por defecto · narra y pasa de escena sola</span></span>
+              </span>
+              <Switch data-testid="autoplay-switch" checked={autoplay} disabled={!audio.ready} onCheckedChange={(v) => { setAutoplay(v); if (v) audio.play(); else audio.stopAll(); }} />
             </label>
           </div>
         </div>
@@ -270,7 +285,7 @@ export default function StoryReader({ publicToken }) {
       )}
 
       {available > 0 && (
-        <div className="mt-8 flex items-center justify-between gap-4 flex-wrap">
+        <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
           <Button data-testid="scene-prev-button" onClick={goPrev} disabled={sceneIdx === 0} variant="outline" className="border-amber-400/40 text-amber-100 bg-transparent hover:bg-amber-400/10 disabled:opacity-40">
             <ChevronLeft className="h-4 w-4 mr-1" /> Anterior
           </Button>
@@ -292,9 +307,10 @@ export default function StoryReader({ publicToken }) {
       )}
 
       <p data-testid="reader-provenance-note" className="mt-10 text-xs font-sans-ui text-slate-500 leading-relaxed max-w-3xl">
-        Generado 100% en local: texto con {story.config.text_model}, ilustraciones con {story.config.image_model} (semilla {story.config.seed}
+        Generado con inferencia local tras descargar los modelos: texto con {story.config.text_model}, ilustraciones con {story.config.image_model} (semilla base {story.config.seed}
         {story.config.ip_adapter ? ", IP-Adapter" : ""}), voz con {story.config.tts_model} y ambiente sonoro sintetizado proceduralmente
-        (sin archivos de terceros). Atajos: ← → escenas · espacio reproducir/pausar.
+        (sin archivos de terceros). Revisa texto e imágenes antes de compartir: la aplicación no filtra el contenido generado.
+        Atajos: ← → escenas · espacio reproducir/pausar.
       </p>
     </main>
   );

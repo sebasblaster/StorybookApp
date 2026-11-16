@@ -15,8 +15,8 @@ SYSTEM = (
     "Respetas exactamente el formato de etiquetas que se te pide."
 )
 
-MIN_WORDS = 55  # below this the scene is extended once
-MIN_ACCEPTABLE = 35  # below this (after extension) the scene is regenerated once
+MIN_WORDS = 55
+MIN_ACCEPTABLE = 35
 
 
 def chat(cfg: dict, user: str, max_new_tokens: int, seed: int) -> tuple[str, int]:
@@ -124,7 +124,8 @@ def _scene_prompt(cfg, idea, genre, plan, previous, i):
         f"Escribe la ESCENA {i + 1} de 5. {NARRATIVE_ARC[i]}\n"
         "Responde SOLO con estas 3 líneas:\n"
         "TEXTO: un párrafo de 4 a 6 oraciones completas (70 a 110 palabras) en español, tercera persona, con detalles sensoriales; "
-        "deja claro cómo esta escena desarrolla la premisa del usuario\n"
+        "deja claro cómo esta escena desarrolla la premisa del usuario, usa mayúsculas y minúsculas normales, no incluyas rótulos "
+        "ni repitas frases\n"
         "IMAGEN_EN: in English, 12-25 words describing only what is visible in this scene (action, place, light), no names\n"
         f"SONIDO: una sola palabra de esta lista: {tags}"
     )
@@ -151,14 +152,23 @@ def _attempt(cfg, idea, genre, plan, previous, i, seed_shift: int) -> tuple[dict
     }, n
 
 
+def _is_degraded(text: str) -> bool:
+    letters = [char for char in text if char.isalpha()]
+    return len(letters) >= 30 and sum(char.isupper() for char in letters) / len(letters) >= 0.65
+
+
 def write_scene(cfg: dict, idea: str, genre: str, plan: dict, previous: list[str], i: int) -> tuple[dict, int]:
     scene, n = _attempt(cfg, idea, genre, plan, previous, i, 0)
-    if len(scene["text"].split()) < MIN_ACCEPTABLE:  # still too short: one retry with another seed
+    if len(scene["text"].split()) < MIN_WORDS or _is_degraded(scene["text"]):
         retry, n2 = _attempt(cfg, idea, genre, plan, previous, i, 997)
         n += n2
-        if len(retry["text"].split()) > len(scene["text"].split()):
+        if not _is_degraded(retry["text"]) and (
+            _is_degraded(scene["text"]) or len(retry["text"].split()) > len(scene["text"].split())
+        ):
             scene = retry
     words = len(scene["text"].split())
+    if _is_degraded(scene["text"]):
+        raise RuntimeError(f"No se pudo generar la escena {i + 1}: texto en mayúsculas sostenidas")
     if words < MIN_ACCEPTABLE:
         raise RuntimeError(f"No se pudo generar la escena {i + 1}: {words} palabras (mínimo {MIN_ACCEPTABLE})")
     return scene, n

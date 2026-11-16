@@ -94,7 +94,10 @@ def main() -> None:
                 rows.append({"idea": idea, "genre": genre, "strategy": strat, "profile": cfg["profile"], "error": str(exc)[:200]})
                 continue
             m, scenes = res["metrics"], res["scenes"]
-            (run_dir / "story.json").write_text(json.dumps({"idea": idea, "genre": genre, "config": cfg, **res}, ensure_ascii=False, indent=2))
+            (run_dir / "story.json").write_text(
+                json.dumps({"idea": idea, "genre": genre, "config": cfg, **res}, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
             contact_sheet(run_dir, scenes, res["plan"]["title"], f"{strat} · {cfg['profile']}")
             rows.append({
                 "idea": idea, "genre": genre, "strategy": strat, "profile": cfg["profile"], "device": cfg["device"],

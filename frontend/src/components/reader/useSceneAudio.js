@@ -2,11 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { mediaUrl } from "@/lib/api";
 
 // Drives narration (WAV from MMS-TTS) + looping ambient (procedural WAV) for one scene.
-export function useSceneAudio(scene, { autoplay, onVoiceEnded }) {
+export function useSceneAudio(scene, { autoplay, onVoiceEnded, onAutoplayBlocked }) {
   const voice = useRef(null);
   const ambient = useRef(null);
   const endedCb = useRef(onVoiceEnded);
+  const autoplayBlockedCb = useRef(onAutoplayBlocked);
   endedCb.current = onVoiceEnded;
+  autoplayBlockedCb.current = onAutoplayBlocked;
 
   const [state, setState] = useState("idle"); // idle | playing | paused
   const [time, setTime] = useState(0);
@@ -46,7 +48,11 @@ export function useSceneAudio(scene, { autoplay, onVoiceEnded }) {
   }, [scene?.audio_duration]);
 
   useEffect(() => {
-    if (autoplay && voiceSrc) voice.current.play().catch(() => {});
+    if (autoplay && voiceSrc) {
+      voice.current.play().catch((error) => {
+        if (error.name === "NotAllowedError") autoplayBlockedCb.current?.();
+      });
+    }
   }, [autoplay, voiceSrc]);
 
   useEffect(() => {

@@ -1,0 +1,3 @@
+idea,genre,strategy,profile,device,seed,steps,title,text_s,image_s,tts_s,total_s,tokens,mentions,words_avg,clip_mean,clip_min,error
+una niña que colecciona sonidos del bosque,fantasia,off,ligero,cpu,42,2,El Rincón de los Sonidos,1077.23,152.8,102.3,1345.91,1192,2,76.0,0.8418,0.7371,
+una niña que colecciona sonidos del bosque,fantasia,on,ligero,cpu,42,2,El Rincón de los Sonidos,1268.51,137.3,83.4,1501.67,1571,4,62.6,0.846,0.8074,

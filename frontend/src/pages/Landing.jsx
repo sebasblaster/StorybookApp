@@ -26,7 +26,7 @@ export default function Landing() {
             </h1>
             <p className="mt-6 max-w-xl font-prose text-xl text-slate-300/90 leading-relaxed">
               Elige un género, comparte una idea breve y el códice creará un relato ilustrado, narrado con voz y
-              envuelto en una ambientación sonora. Todo en tu computadora, sin internet.
+              envuelto en una ambientación sonora. La generación se ejecuta localmente después de descargar los modelos.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link to={primaryTo}>
@@ -45,7 +45,7 @@ export default function Landing() {
               {[
                 { Icon: Feather, title: "6 géneros", sub: "Fantasía · misterio · terror · aventura · ciencia ficción · infantil" },
                 { Icon: BookOpen, title: "5 escenas", sub: "Narrativa coherente con continuidad visual" },
-                { Icon: Volume2, title: "100% local", sub: "Modelos abiertos de Hugging Face, sin APIs ni internet" },
+                { Icon: Volume2, title: "Inferencia local", sub: "Modelos descargados previamente; sin APIs de generación" },
               ].map(({ Icon, title, sub }) => (
                 <div key={title} className="parchment rounded-xl p-4 relative paper-grain overflow-hidden">
                   <Icon className="h-5 w-5 text-amber-300 mb-2" />
@@ -148,8 +148,9 @@ export default function Landing() {
           <h3 className="font-display text-2xl text-amber-100 mt-2">Tu computadora es el estudio completo</h3>
           <p className="font-prose text-lg text-slate-300/90 mt-3 leading-relaxed">
             Un modelo de lenguaje escribe, Stable Diffusion Turbo ilustra y MMS-TTS narra, todo ejecutándose en tu propia máquina.
-            Los modelos se descargan una vez desde Hugging Face y después Storybook funciona sin internet, sin APIs pagas
-            y sin enviar tus ideas a ningún servidor.
+            Los modelos se descargan desde Hugging Face. Con los pesos disponibles, la inferencia se ejecuta en tu equipo
+            y no requiere APIs de generación externas. Para demostrar el modo sin conexión, inicia la app con los modelos
+            en caché y verifica su funcionamiento con internet deshabilitado.
           </p>
           <Link to="/about" data-testid="landing-architecture-link" className="inline-block mt-5 text-amber-300 hover:text-amber-200 font-sans-ui text-sm">
             Ver la arquitectura →
